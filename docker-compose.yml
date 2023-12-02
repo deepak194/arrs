@@ -1,0 +1,150 @@
+version: "3.2"
+services:
+  radarr:
+    container_name: radarr
+    image: lscr.io/linuxserver/radarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Melbourne
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /home/mediaadmin/dockerdata/arrs/data/radarr:/config
+      - /home/mediaadmin/arrmedia/data:/data
+  sonarr:
+    container_name: sonarr
+    image: lscr.io/linuxserver/sonarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Melbourne
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /home/mediaadmin/dockerdata/arrs/data/sonarr:/config
+      - /home/mediaadmin/arrmedia/data:/data
+  bazarr:
+    container_name: bazarr
+    image: lscr.io/linuxserver/bazarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 6767:6767
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Melbourne
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /home/mediaadmin/dockerdata/arrs/data/bazarr:/config
+      - /home/mediaadmin/arrmedia/data:/data
+  sabnzbd:
+    container_name: sabnzbd
+    image: lscr.io/linuxserver/sabnzbd:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 8280:8080
+      - 9090:9090
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Melbourne
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /home/mediaadmin/dockerdata/arrs/data/sabnzbd:/config
+      - /home/mediaadmin/arrmedia/data/usenet:/data/usenet:rw
+  lidarr:
+    container_name: lidarr
+    image: lscr.io/linuxserver/lidarr:latest
+    logging:
+      driver: json-file
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Melbourne
+    volumes:
+      - /home/mediaadmin/dockerdata/arrs/data/lidarr/config:/config
+      - /home/mediaadmin/arrmedia/data:/data #optional
+     # - /home/mediaadmin/arrmedia/data/torrents/:/data/downloads #optional
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Melbourne
+    volumes:
+      - /home/mediaadmin/dockerdata/arrs/data/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Melbourne
+    volumes:
+      - /home/mediaadmin/dockerdata/arrs/data/readarr:/config
+      - /home/mediaadmin/arrmedia/data:/data #optional
+     # - /home/mediaadmin/arrmedia/data/torrents:/data #optional
+    ports:
+      - 8787:8787
+    restart: unless-stopped
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Melbourne
+      - WEBUI_PORT=8080
+    volumes:
+      - /home/mediaadmin/dockerdata/arrs/data/qbittorrent/config:/config
+      - /home/mediaadmin/arrmedia/data/torrents:/data/torrents
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+  deemix:
+    image: registry.gitlab.com/bockiii/deemix-docker
+    container_name: Deemix
+    volumes:
+      - /home/mediaadmin/arrmedia/data/deemix:/data
+      - /home/mediaadmin/dockerdata/arrs/data/deemix:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK_SET=022
+    ports:
+      - 6595:6595
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    volumes:
+      - /home/mediaadmin/dockerdata/arrs/data/homarr/configs:/app/data/configs
+      - /home/mediaadmin/dockerdata/arrs/data/homarr/icons:/app/public/icons
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - '7575:7575'
+networks:
+  default:
+    name: arr
