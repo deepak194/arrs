@@ -32,3 +32,8 @@ run the following commands:
 chmod +x install.sh
 
 sudo ./install.sh
+
+
+
+
+Credits to Trashguides
