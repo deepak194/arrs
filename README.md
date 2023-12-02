@@ -16,6 +16,13 @@ This script does multiple things
 
 Setup: 
 
+Note: Change the user folder path name in docker-compose.yml file to your username home directory folder path
+
+Ex: my user path is /home/mediaserver/ change it to /home/xxxx/ 
+
+you can find that path by typing "pwd"
+
+
 To use this, download install.sh and docker-compose.yml files and leave in home directory of your ubuntu install. 
 
 example: /home/mediaserver/install.sh  /home/mediaserver/docker-compose.yml
