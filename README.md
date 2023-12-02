@@ -1,4 +1,4 @@
-# Install and setup directories for all the Arr's based on Trashguides https://trash-guides.info/ 
+# Install and setup directories for all the Arr's
 setup all arr's from one single script, this is a basic script that does the following and created by my limited knowledge of bash scripting.
 
 This script does multiple things
