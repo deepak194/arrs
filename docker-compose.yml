@@ -145,6 +145,19 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - '7575:7575'
+nzbhydra2:
+    image: lscr.io/linuxserver/nzbhydra2:latest
+    container_name: nzbhydra2
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Melbourne
+    volumes:
+      - /home/mediaadmin/dockerdata/arrs/data/nzbhydra2/data:/config
+      - /home/mediaadmin/arrmedia/data/usenet:/data/usenet
+    ports:
+      - 5076:5076
+    restart: unless-stopped
 networks:
   default:
     name: arr
