@@ -145,7 +145,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - '7575:7575'
-nzbhydra2:
+ nzbhydra2:
     image: lscr.io/linuxserver/nzbhydra2:latest
     container_name: nzbhydra2
     environment:
